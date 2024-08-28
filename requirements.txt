@@ -1,1 +1,1 @@
-FastAPI
+fastapi[standard]
