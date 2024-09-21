@@ -1,17 +1,17 @@
 FROM python:3.11-slim
 
-# ARGS
-#By default, the application will run in production mode
-ARG MODE=run
 
 # Set the working directory
 WORKDIR /app
+
+# Install postgresql-client
+RUN apt-get update && apt-get install -y libpq-dev
 
 # Copy requirements file
 COPY requirements.txt .
 
 # Install dependencies
-RUN pip install --no-cache-dir --upgrade -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the current directory contents into the container at /app
 COPY . .

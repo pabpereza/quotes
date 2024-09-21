@@ -10,7 +10,7 @@ router = APIRouter(
 
 @router.get("")
 async def read_quotes():
-    return [{"text": "quote1"}, {"text": "quote2"}]
+    return [{"Hola Mundo": "- Random developer"}]
 
 
 @router.post("")
