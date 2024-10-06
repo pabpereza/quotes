@@ -25,8 +25,8 @@ services:
      
   postgres:
     image: bitnami/postgresql
-    environment:
-
+    env_file:
+      - .env
     volumes:
       - postgres-data:/var/lib/postgresql/data
     
