@@ -10,9 +10,6 @@ on:
   schedule:
     - cron: '39 9 * * 2'
 
-permissions:
-  contents: read
-
 jobs:
   build:
     permissions:
