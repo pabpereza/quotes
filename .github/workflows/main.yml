@@ -27,8 +27,12 @@ jobs:
     name: Build
     uses: ./.github/workflows/build.yml
 
-
   security:
     needs: build
     name: Security Scans
     uses: ./.github/workflows/security_scans.yml
+
+  deploy:
+    needs: security 
+    name: Deploy
+    uses: ./.github/workflows/deploy.yml

@@ -1,0 +1,14 @@
+name: Deploy Dummy
+
+on:
+    workflow_call:
+    workflow_dispatch:
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Dummy deploy step
+              run: echo "Simulating deployment..."
