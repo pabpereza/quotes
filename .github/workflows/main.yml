@@ -27,9 +27,6 @@ jobs:
     name: Build
     uses: ./.github/workflows/build.yml
 
-  build_container:
-    name: Build Container
-    uses: ./.github/workflows/build_container.yml
 
   security:
     needs: build
