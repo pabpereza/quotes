@@ -32,7 +32,6 @@ jobs:
       - name: Build
         uses: ./.github/workflows/build.yml
    
-
   scanners:
     name: Run Security Scanners
     runs-on: ubuntu-latest
