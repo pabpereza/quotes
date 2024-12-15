@@ -26,7 +26,9 @@ jobs:
   build:
     name: Build python dependencies
     runs-on: ubuntu-latest
-    uses: ./.github/workflows/python-app.yml
+    steps:
+        - name: Build
+          uses: ./.github/workflows/python-app.yml
 
   scanners:
     name: Run Security Scanners
