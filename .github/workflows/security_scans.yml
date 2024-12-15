@@ -1,0 +1,35 @@
+name: Security Scans 
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+  attestations: read
+  checks: read
+  deployments: read
+  discussions: read
+  issues: read
+  packages: read
+  pages: read
+  pull-requests: read
+  repository-projects: read
+  statuses: read
+  id-token: write
+
+jobs:
+  trivy:
+    name: Run Trivy Workflow
+    uses: ./.github/workflows/trivy.yml
+
+  scorecard:
+    name: Run Scorecard Workflow
+    uses: ./.github/workflows/scorecard.yml
+
+  bandit:
+    name: Run Bandit Workflow
+    uses: ./.github/workflows/bandit.yml
+
+ 
