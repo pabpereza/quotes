@@ -1,0 +1,24 @@
+name: Main Workflow
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  trivy:
+    name: Run Trivy Workflow
+    uses: ./.github/workflows/trivy.yml
+
+  scorecard:
+    name: Run Scorecard Workflow
+    uses: ./.github/workflows/scorecard.yml
+
+  python-app:
+    name: Run Python App Workflow
+    uses: ./.github/workflows/python-app.yml
+
+  bandit:
+    name: Run Bandit Workflow
+    uses: ./.github/workflows/bandit.yml
