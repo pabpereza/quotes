@@ -23,18 +23,24 @@ permissions:
   id-token: write
 
 jobs:
-  trivy:
-    name: Run Trivy Workflow
-    uses: ./.github/workflows/trivy.yml
-
-  scorecard:
-    name: Run Scorecard Workflow
-    uses: ./.github/workflows/scorecard.yml
-
-  python-app:
-    name: Run Python App Workflow
+  build:
+    name: Build python dependencies
+    runs-on: ubuntu-latest
     uses: ./.github/workflows/python-app.yml
 
-  bandit:
-    name: Run Bandit Workflow
-    uses: ./.github/workflows/bandit.yml
+  scanners:
+    name: Run Security Scanners
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Trivy Workflow
+        uses: ./.github/workflows/trivy.yml
+
+      - name: Run Scorecard Workflow
+        uses: ./.github/workflows/scorecard.yml
+
+      - name: Run Bandit Workflow
+        uses: ./.github/workflows/bandit.yml
