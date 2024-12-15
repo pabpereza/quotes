@@ -25,19 +25,19 @@ permissions:
 jobs:
   build:
     name: Build
-    uses: ./.github/workflows/build.yml
+    uses: ./.github/actions/build.yml
    
   trivy:
     needs: build
     name: Run Trivy Workflow
-    uses: ./.github/workflows/trivy.yml
+    uses: ./.github/actions/trivy.yml
 
   scorecard:
     needs: build
     name: Run Scorecard Workflow
-    uses: ./.github/workflows/scorecard.yml
+    uses: ./.github/actions/scorecard.yml
 
   bandit:
     needs: build
     name: Run Bandit Workflow
-    uses: ./.github/workflows/bandit.yml
+    uses: ./.github/actions/bandit.yml
