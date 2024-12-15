@@ -30,15 +30,13 @@ jobs:
   scanners:
     name: Run Security Scanners
     runs-on: ubuntu-latest
+    needs: build 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Run Trivy Workflow
-        uses: ./.github/workflows/trivy
+        uses: ./.github/workflows/trivy.yml
 
       - name: Run Scorecard Workflow
-        uses: ./.github/workflows/scorecard
+        uses: ./.github/workflows/scorecard.yml
 
       - name: Run Bandit Workflow
-        uses: ./.github/workflows/bandit
+        uses: ./.github/workflows/bandit.yml
