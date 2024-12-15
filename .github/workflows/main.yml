@@ -23,19 +23,10 @@ permissions:
   id-token: write
 
 jobs:
-  build:
-    name: Build python dependencies
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Build
-        uses: ./.github/workflows/build
    
   scanners:
     name: Run Security Scanners
     runs-on: ubuntu-latest
-    needs: build
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
