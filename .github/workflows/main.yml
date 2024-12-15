@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [ "main" ]
 
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
 jobs:
   trivy:
     name: Run Trivy Workflow
