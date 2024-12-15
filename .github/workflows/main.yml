@@ -30,7 +30,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Build
-        uses: ./.github/workflows/build.yml
+        uses: ./.github/workflows/build
    
   scanners:
     name: Run Security Scanners
@@ -41,10 +41,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Trivy Workflow
-        uses: ./.github/workflows/trivy.yml
+        uses: ./.github/workflows/trivy
 
       - name: Run Scorecard Workflow
-        uses: ./.github/workflows/scorecard.yml
+        uses: ./.github/workflows/scorecard
 
       - name: Run Bandit Workflow
-        uses: ./.github/workflows/bandit.yml
+        uses: ./.github/workflows/bandit
