@@ -19,7 +19,25 @@ spec:
           image: pabpereza/quotes
           ports:
             - containerPort: 80
-        
+          livenessProbe:
+              httpGet:
+                  path: /health
+                  port: 80
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              failureThreshold: 3
+          readinessProbe:
+              httpGet:
+                  path: /ready
+                  port: 80
+              initialDelaySeconds: 5
+              periodSeconds: 5
+              failureThreshold: 3
+          resources:
+            requests:
+              memory: "256Mi"
+            limits:
+              memory: "1024Mi"
 ---
 apiVersion: v1
 kind: Service
