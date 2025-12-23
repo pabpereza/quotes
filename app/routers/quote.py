@@ -1,33 +1,22 @@
-from fastapi import APIRouter, HTTPException
-from ..models.quote import Quote
+from typing import List
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from ..models.quote import Quote as QuotePydantic, QuoteCreate
+from ..misc.database import get_db
+from ..misc.security import get_current_user
+from ..models.user import User as UserModel
+from ..controllers.quote import quote_controller
 
 router = APIRouter(
-    prefix="/quote",
+    prefix="/quotes",
     tags=["quote"],
     responses={404: {"description": "Not found"}},
 )
 
+@router.get("", response_model=List[QuotePydantic])
+async def read_quotes(db: Session = Depends(get_db)):
+    return quote_controller.read_quotes(db=db)
 
-@router.get("")
-async def read_quotes():
-    return [{"Hola Mundo": "- Random developer"}]
-
-
-@router.post("")
-async def create_quote(quote: Quote):
-    return quote
-
-# AI Routes
-@router.get("/ai")
-async def read_ai_quotes():
-    # Make request to docker model ai with a prompt
-    # Return the response
-
-    request = {
-        "prompt": "Give me a random quote",
-        "max_length": 50,
-        "temperature": 0.7,
-        "top_p": 0.9,
-        "top_k": 50,
-        "repetition_penalty": 1.2,
-    }
+@router.post("", response_model=QuotePydantic, status_code=201)
+async def create_quote(quote: QuoteCreate, db: Session = Depends(get_db), current_user: UserModel = Depends(get_current_user)):
+    return quote_controller.create_quote(db=db, quote=quote)

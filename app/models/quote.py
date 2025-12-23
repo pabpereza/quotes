@@ -1,34 +1,15 @@
-from fastapi import Path
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, ConfigDict
+from typing import Optional
 
+class QuoteBase(BaseModel):
+    text: str = Field(..., title="Texto de la cita", min_length=10)
+    author: str = Field(..., title="Autor", min_length=3)
+    category: Optional[str] = "General"
 
-class Source(BaseModel):
-    name: str
-    year: int
+class QuoteCreate(QuoteBase):
+    pass
 
-    class config:
-        orm_mode = True
+class Quote(QuoteBase):
+    id: int
 
-class Type(BaseModel):
-    name: str
-    description: str
-
-    class config:
-        orm_mode = True
-    
-
-class Tag(BaseModel):
-    name: str
-    description: str
-
-    class config:
-        orm_mode = True
-
-class Quote(BaseModel):
-    text: str
-    source: Source | None = None
-    type: Type | None = None
-    tags: list[Tag] | None = None
-
-    class config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
