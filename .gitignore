@@ -124,6 +124,7 @@ dmypy.json
 *.sqlite3
 
 # Local virtualenv
+.venv/
 .local/
 
 # VS Code
