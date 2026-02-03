@@ -2,5 +2,6 @@ fastapi[standard]
 sqlalchemy
 psycopg2-binary
 bcrypt
-python-jose
+python-jose[cryptography]
+python-multipart
 pytest

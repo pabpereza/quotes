@@ -1,4 +1,3 @@
-from typing import List
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from ..models import user as user_model
@@ -16,7 +15,7 @@ router = APIRouter(
 def create_user(user: user_model.UserCreate, db: Session = Depends(get_db)):
     return user_controller.create_user(db=db, user=user)
 
-@router.get("/", response_model=List[user_model.User])
+@router.get("/", response_model=list[user_model.User])
 def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return user_controller.read_users(db=db, skip=skip, limit=limit)
 

@@ -1,10 +1,10 @@
 from pydantic import BaseModel, Field, ConfigDict
-from typing import Optional
+
 
 class QuoteBase(BaseModel):
     text: str = Field(..., title="Texto de la cita", min_length=10)
     author: str = Field(..., title="Autor", min_length=3)
-    category: Optional[str] = "General"
+    category: str | None = "General"
 
 class QuoteCreate(QuoteBase):
     pass

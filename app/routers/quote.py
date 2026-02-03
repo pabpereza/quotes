@@ -1,4 +1,3 @@
-from typing import List
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from ..models.quote import Quote as QuotePydantic, QuoteCreate
@@ -13,7 +12,7 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-@router.get("", response_model=List[QuotePydantic])
+@router.get("", response_model=list[QuotePydantic])
 async def read_quotes(db: Session = Depends(get_db)):
     return quote_controller.read_quotes(db=db)
 
