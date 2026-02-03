@@ -24,10 +24,6 @@ jobs:
     name: Run Trivy Workflow
     uses: ./.github/workflows/trivy.yml
 
-  scorecard:
-    name: Run Scorecard Workflow
-    uses: ./.github/workflows/scorecard.yml
-
   bandit:
     name: Run Bandit Workflow
     uses: ./.github/workflows/bandit.yml

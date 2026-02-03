@@ -5,7 +5,7 @@ metadata:
   labels:
     app: quotes 
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: quotes
@@ -21,20 +21,21 @@ spec:
             - containerPort: 80
           livenessProbe:
               httpGet:
-                  path: /health
+                  path: /probes/health
                   port: 80
               initialDelaySeconds: 10
               periodSeconds: 10
               failureThreshold: 3
           readinessProbe:
               httpGet:
-                  path: /ready
+                  path: /probes/ready
                   port: 80
               initialDelaySeconds: 5
               periodSeconds: 5
               failureThreshold: 3
           resources:
             requests:
+              cpu: "100m"
               memory: "256Mi"
             limits:
               memory: "1024Mi"
