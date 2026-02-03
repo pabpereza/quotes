@@ -174,7 +174,65 @@ Para ejecutar todos los tests:
 docker-compose run test
 ```
 
-## 6. Instrucciones de Comportamiento para el Agente
+Para ejecutar tests localmente (sin Docker):
+```bash
+python -m pytest app/test/ -v
+```
+
+## 6. Configuración de Base de Datos
+
+### Detección Automática
+La aplicación detecta automáticamente qué base de datos usar:
+- **PostgreSQL**: Si la variable de entorno `POSTGRES_HOST` está configurada.
+- **SQLite**: Si no hay configuración de PostgreSQL (modo desarrollo local).
+
+### Variables de Entorno para PostgreSQL
+```bash
+POSTGRES_HOST=localhost      # Host de PostgreSQL
+POSTGRES_USER=postgres       # Usuario
+POSTGRES_PASSWORD=postgres   # Contraseña
+POSTGRES_DB=quotes           # Nombre de la base de datos
+```
+
+### Carga Automática de Datos de Prueba
+Al arrancar la aplicación:
+1. Se crean las tablas automáticamente si no existen.
+2. Si la base de datos está vacía, se cargan **15 citas célebres de ejemplo**.
+3. Se crea un **usuario admin** con credenciales:
+   - Usuario: `admin`
+   - Password: `admin123`
+
+## 7. Endpoints de la API
+
+### Citas (`/quotes`)
+| Método | Endpoint | Descripción | Autenticación |
+|--------|----------|-------------|---------------|
+| GET | `/quotes` | Devuelve una cita aleatoria | No |
+| GET | `/quotes/all` | Devuelve todas las citas (paginación: `skip`, `limit`) | No |
+| POST | `/quotes` | Crea una nueva cita | Sí |
+
+### Usuarios (`/users`)
+| Método | Endpoint | Descripción | Autenticación |
+|--------|----------|-------------|---------------|
+| GET | `/users/` | Lista todos los usuarios | No |
+| GET | `/users/{id}` | Obtiene un usuario por ID | No |
+| POST | `/users/` | Crea un nuevo usuario | No |
+| PUT | `/users/{id}` | Actualiza un usuario | Sí |
+| DELETE | `/users/{id}` | Elimina un usuario | Sí |
+
+### Autenticación (`/token`)
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| POST | `/token` | Obtiene un token JWT (OAuth2 password flow) |
+
+### Health Checks (`/probes`)
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| GET | `/probes/startup` | Verifica que el servicio ha arrancado |
+| GET | `/probes/health` | Verifica que el servicio está funcionando |
+| GET | `/probes/ready` | Verifica que el servicio está listo para recibir peticiones |
+
+## 8. Instrucciones de Comportamiento para el Agente
 1.  Al añadir una nueva entidad, crea o modifica los modelos en `app/models` (Pydantic) y `app/db` (SQLAlchemy).
 2.  Implementa la lógica de negocio en un controlador dedicado en `app/controllers`. Las funciones CRUD deben estar integradas en el controlador o ser métodos privados del mismo.
 3.  Implementa los endpoints en un router dedicado en `app/routers`, el cual solo debe llamar a los métodos del controlador.
@@ -182,3 +240,4 @@ docker-compose run test
 5.  Registra el nuevo router en `app/main.py`.
 6.  Asegúrate de que los tests cubran la nueva funcionalidad.
 7.  Mantén los ficheros de configuración (`app/misc/database.py`, `app/misc/security.py`, `app/misc/hashing.py`) y sus importaciones correctos.
+8.  Para desarrollo local, no es necesario configurar PostgreSQL; la aplicación usará SQLite automáticamente.

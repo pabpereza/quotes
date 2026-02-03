@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from sqlalchemy.sql.expression import func
 from ..models import quote as quote_model
 from ..db import quote as quote_db
 from fastapi import HTTPException
@@ -9,6 +10,13 @@ class QuoteController:
 
     def read_quotes(self, db: Session, skip: int = 0, limit: int = 100):
         return db.query(quote_db.Quote).offset(skip).limit(limit).all()
+
+    def get_random_quote(self, db: Session):
+        """Obtiene una cita aleatoria de la base de datos."""
+        quote = db.query(quote_db.Quote).order_by(func.random()).first()
+        if quote is None:
+            raise HTTPException(status_code=404, detail="No quotes available")
+        return quote
 
     def create_quote(self, db: Session, quote: quote_model.QuoteCreate):
         db_quote = quote_db.Quote(**quote.model_dump())
