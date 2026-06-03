@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from .misc.database import engine, Base, SessionLocal
@@ -54,21 +55,20 @@ def load_sample_data():
         db.close()
 
 
-async def startup_event():
-    """Evento de inicio: crea tablas y carga datos de prueba."""
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     Base.metadata.create_all(bind=engine)
     load_sample_data()
+    yield
 
 
 app = FastAPI(
     title="API de Citas Célebres",
     description="Una API REST para gestionar citas célebres",
     version="1.0.0",
-    default_response_class=JSONResponse
+    default_response_class=JSONResponse,
+    lifespan=lifespan
 )
-
-# Event handler for startup
-app.add_event_handler("startup", startup_event)
 
 # Include routers
 app.include_router(quote.router)
