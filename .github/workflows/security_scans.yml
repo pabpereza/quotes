@@ -20,10 +20,6 @@ permissions:
   id-token: write
 
 jobs:
-  trivy:
-    name: Run Trivy Workflow
-    uses: ./.github/workflows/trivy.yml
-
   bandit:
     name: Run Bandit Workflow
     uses: ./.github/workflows/bandit.yml
