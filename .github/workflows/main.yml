@@ -32,7 +32,7 @@ jobs:
     name: Security Scans
     uses: ./.github/workflows/security_scans.yml
 
-  deploy:
+  push:
     needs: build
-    name: Deploy
+    name: Push
     uses: ./.github/workflows/deploy.yml

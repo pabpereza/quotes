@@ -1,14 +1,28 @@
-name: Deploy Dummy
+name: Push
 
 on:
     workflow_call:
     workflow_dispatch:
+
 jobs:
-    deploy:
+    push:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - name: Dummy deploy step
-              run: echo "Simulating deployment..."
+            - name: Log in to Docker Hub
+              uses: docker/login-action@v3
+              with:
+                username: ${{ secrets.DOCKERHUB_USERNAME }}
+                password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+            - name: Build and push image
+              uses: docker/build-push-action@v6
+              with:
+                context: .
+                file: dockerfile
+                push: true
+                tags: |
+                  pabpereza/quotes:latest
+                  pabpereza/quotes:${{ github.sha }}
