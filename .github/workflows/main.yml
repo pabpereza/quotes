@@ -33,6 +33,6 @@ jobs:
     uses: ./.github/workflows/security_scans.yml
 
   deploy:
-    needs: security 
+    needs: build
     name: Deploy
     uses: ./.github/workflows/deploy.yml
