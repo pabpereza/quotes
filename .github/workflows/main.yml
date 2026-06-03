@@ -36,3 +36,4 @@ jobs:
     needs: build
     name: Push
     uses: ./.github/workflows/deploy.yml
+    secrets: inherit
