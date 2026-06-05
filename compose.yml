@@ -1,6 +1,6 @@
 services:
   backend:
-    image: quotes-back
+    image: ${QUOTES_IMAGE:-pabpereza/quotes}
     build:
       context: .
       dockerfile: dockerfile
