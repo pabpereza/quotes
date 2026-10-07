@@ -6,7 +6,7 @@ from app.main import app
 from app.misc.database import Base, get_db
 import os
 
-SQLALCHEMY_DATABASE_URL = "postgresql://{}:{}@{}/{}".format(
+SQLALCHEMY_DATABASE_URL = "postgresql+psycopg2://{}:{}@{}/{}".format(
     os.getenv("POSTGRES_USER", "postgres"),
     os.getenv("POSTGRES_PASSWORD", "postgres"),
     os.getenv("POSTGRES_HOST", "postgres"),

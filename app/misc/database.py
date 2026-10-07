@@ -16,7 +16,7 @@ def _get_database_url() -> tuple[str, dict]:
         user = os.getenv("POSTGRES_USER", "postgres")
         password = os.getenv("POSTGRES_PASSWORD", "postgres")
         database = os.getenv("POSTGRES_DB", "quotes")
-        url = f"postgresql://{user}:{password}@{postgres_host}/{database}"
+        url = f"postgresql+psycopg2://{user}:{password}@{postgres_host}/{database}"
         return url, {}
     else:
         # SQLite para desarrollo local (sin configuración de PostgreSQL)
