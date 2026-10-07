@@ -34,17 +34,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-
-  test:
-    build:
-      context: .
-      dockerfile: dockerfile
-    env_file:
-      - .env
-    depends_on:
-      postgres:
-        condition: service_healthy
-    command: ["pytest"]
     
 volumes:
   postgres-data:
