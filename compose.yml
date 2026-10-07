@@ -9,6 +9,9 @@ services:
     env_file:
       - .env
     restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
     deploy:
        resources:
         limits:
@@ -18,7 +21,7 @@ services:
           cpus: '0.5'
           memory: 200M
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:80/probes/health')"]
       interval: 10s
       timeout: 10s
       retries: 3
