@@ -10,7 +10,7 @@ export const options = {
   ],
 };
 
-const API_BASE_URL = 'http://localhost';
+const API_BASE_URL = 'http://localhost:8080';
 
 export default function () {
   // Get random quote
